@@ -88,7 +88,7 @@ namespace
     }
 } // anonymous namespace
 
-DoubleLinkList DriverList::m_clDriverList;
+TypedDoubleLinkList<Driver> DriverList::m_clDriverList;
 
 //---------------------------------------------------------------------------
 void DriverList::Init()
@@ -103,7 +103,7 @@ void DriverList::Init()
 Driver* DriverList::FindByPath(const char* m_pcPath)
 {
     KERNEL_ASSERT(m_pcPath);
-    auto* pclTemp = static_cast<Driver*>(m_clDriverList.GetHead());
+    auto* pclTemp = m_clDriverList.GetHead();
 
     // Iterate through the list of drivers until we find a match, or we
     // exhaust our list of installed drivers
@@ -111,7 +111,7 @@ Driver* DriverList::FindByPath(const char* m_pcPath)
         if (DrvCmp(m_pcPath, pclTemp->GetPath()) != 0u) {
             return pclTemp;
         }
-        pclTemp = static_cast<Driver*>(pclTemp->GetNext());
+        pclTemp = pclTemp->GetNext();
     }
     // No matching driver found - return a pointer to our /dev/null driver
     return &clDevNull;
