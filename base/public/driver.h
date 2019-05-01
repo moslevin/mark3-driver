@@ -116,7 +116,7 @@ class DriverList;
  *  Base device-driver class used in hardware abstraction.  All other device
  *  drivers inherit from this class
  */
-class Driver : public LinkListNode
+class Driver : public TypedLinkListNode<Driver>
 {
 public:
     void* operator new(size_t sz, void* pv) { return (Driver*)pv; };
@@ -268,6 +268,6 @@ public:
 
 private:
     //! LinkedList object used to implementing the driver object management
-    static DoubleLinkList m_clDriverList;
+    static TypedDoubleLinkList<Driver> m_clDriverList;
 };
 } // namespace Mark3
